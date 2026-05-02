@@ -16,15 +16,13 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
+  const closeMobileMenu = () => setMobileOpen(false);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [location]);
 
   return (
     <>
@@ -36,7 +34,7 @@ export default function Navbar() {
       >
         <div className="container navbar__inner">
           {/* Logo */}
-          <Link to="/" className="navbar__logo">
+          <Link to="/" className="navbar__logo" onClick={closeMobileMenu}>
             <img src="/logo/logo.png" alt="Tayabali & Sons logo" className="navbar__logo-image" />
           </Link>
 
@@ -46,6 +44,7 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
+                onClick={closeMobileMenu}
                 className={`navbar__link ${location.pathname === link.path ? 'navbar__link--active' : ''}`}
               >
                 {link.label}
@@ -66,7 +65,7 @@ export default function Navbar() {
               <Phone size={14} />
               <span>+91 99742 55324</span>
             </a>
-            <Link to="/contact" className="btn btn--sm btn--primary">
+            <Link to="/contact" className="btn btn--sm btn--primary" onClick={closeMobileMenu}>
               Get a Quote
             </Link>
           </div>
@@ -103,6 +102,7 @@ export default function Navbar() {
                 >
                   <Link
                     to={link.path}
+                    onClick={closeMobileMenu}
                     className={`mobile-menu__link ${location.pathname === link.path ? 'mobile-menu__link--active' : ''}`}
                   >
                     {link.label}
@@ -114,7 +114,7 @@ export default function Navbar() {
               <a href="tel:+919974255324" className="mobile-menu__phone">
                 <Phone size={16} /> +91 99742 55324
               </a>
-              <Link to="/contact" className="btn btn--primary" style={{ width: '100%', textAlign: 'center' }}>
+              <Link to="/contact" className="btn btn--primary" style={{ width: '100%', textAlign: 'center' }} onClick={closeMobileMenu}>
                 Get a Quote
               </Link>
             </div>
